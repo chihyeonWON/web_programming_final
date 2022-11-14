@@ -1,6 +1,10 @@
 # web_programming_final
 web_programming_final
 
+## 생성할 테이블 구조도
+![image](https://user-images.githubusercontent.com/58906858/201564260-1420c2fe-49b8-4342-9727-c272a235f87e.png)
+
+
 ## 테이블 생성
 
 ```php
