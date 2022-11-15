@@ -155,12 +155,33 @@ desc user
 localhost = 127.0.0.1 자기주소
 ::1 -> IPv6 주소
 
+select host, user, password from user; << 비밀번호 확인
 
 ![image](https://user-images.githubusercontent.com/58906858/201845407-287015e9-2725-40c2-8e49-544275aab72f.png)
 
 비밀번호 설정 명령어 : set password = password('설정할 패스워드');
 
-flush privileges : 이 계정과 비밀번호로 접속했을 때 모든 권한을 주겠다.
+flush privileges : 이 계정과 비밀번호로 접속했을 때모든 권한을 주겠다.
+
+## MySQLi 확장 함수와 상수
+
+https://www.php.net/manual/en/mysqli.summary.php
+
+
+```php
+$mysqli::query() => $mysqli->query()
+$mysqli_result::affected_rows => $mysqli_result->affected_rows
+```
+
+일반적으로 mysqli 객체 변수명칭을 쓰지만 개발자가 원하는 명칭을 사용해도 됩니다.
+```PHP
+$link = new mysqli($host, $user);
+$link->select_db("friend);
+$result = $link->query("SELECT name FROM friend);
+$number = $result->fetch_array(MYSQLI_BOTH);
+$link->close();
+```
+
 
 
 
