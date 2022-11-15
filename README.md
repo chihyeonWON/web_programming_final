@@ -182,6 +182,76 @@ $number = $result->fetch_array(MYSQLI_BOTH);
 $link->close();
 ```
 
+## PHP와 MySQL 연동
 
+1. MySQL 접속
+2. 데이터베이스 선택
+3. 쿼리문 실행
+4. MySQL 종료
+
+*Apache 서버를 실행시켜야 합니다.
+
+1. MySQL 접속
+
+객체 중심 : $link = new mysqli('localhost', 'user', 'password', 'dbname');
+절차 지향 : $link = mysqli_connect('localhost', 'user', 'password', 'dbname');
+
+```php
+<?php
+//$link = new mysqli("localhost", "root", "1234");
+$host = "localhost";
+$user = "root";
+$password = "1234";
+$link = new mysqli($host, $user, $password);
+//$link = mysqli_connect($host, $user, $password);
+?>
+```
+
+접속 성공하면 DB 접속 성공
+```PHP
+<?php
+$host = "localhost"; $user = "root"; $password = "1234";
+$link = new mysqli($host, $user, $password);
+if (!$link) {
+    die("DB 접속 실패" . $link->connect_error); // die -> 출력하고 프로그램 종류
+} else echo "DB 접속 성공<br>";
+?>
+```
+
+## 기존 데이터베이스 선택
+```PHP
+<?php
+$host = "localhost"; $user = "root"; $password = "1234";
+$dbname = "mysql";
+$link = new mysqli($host, $user, $password, $dbname);
+if (!$link) {
+    die("DB 접속 실패" . $link->connect_error); // die -> 출력하고 프로그램 종류
+} else echo "DB 접속 성공<br>";
+?>
+```
+
+## 접속 후 데이터 베이스 선택 : select_db()
+```PHP
+<?php
+$host = "localhost"; $user = "root"; $password = "1234";
+$link = new mysqli($host, $user, $password);
+$mydb = $link->select_db("mysql"); // return 되는 값 : 0 또는 1
+// db접속이 되었는지 추가 확인
+```
+
+## PHP로 데이터 베이스 생성 (쿼리문 작성)
+```PHP
+<?php
+$host = "localhost"; $user = "root"; $password = "1234";
+$link = new mysqli($host, $user, $password);
+$link->query("create database abc");
+//mysqli_query($link, "create database testdb");
+?>
+```
+
+## DBMS 종료 : close()
+
+객체 중심 : $link->close()
+절차 지향 : $mysqli_close($link);
 
 
