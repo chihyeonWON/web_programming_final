@@ -254,4 +254,11 @@ $link->query("create database abc");
 객체 중심 : $link->close()
 절차 지향 : $mysqli_close($link);
 
+## 기말고사 프로젝트
+
+https://www.dothome.co.kr/
+![image](https://user-images.githubusercontent.com/58906858/201856822-e8d36973-36ef-4bbc-8ec9-1e4b06b169b7.png)
+
+id : heungeob1003
+pw : h!
 
