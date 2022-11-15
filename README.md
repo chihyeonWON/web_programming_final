@@ -262,3 +262,4 @@ https://www.dothome.co.kr/
 id : heungeob1003
 pw : h!
 
+http://114.71.72.35/grade/
