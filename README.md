@@ -98,3 +98,69 @@ alter table table명 auto_incremnt=1;
 
 ![image](https://user-images.githubusercontent.com/58906858/201563700-01dcfba7-c12a-45fd-bb82-ba3f64c87702.png)
 
+## PHP와 MySQL 연동
+
+MySQLi 확장은 절차지향적, 객체지향적 API를 함께 제공하고 목적에 따라 적절한 방식을 선택하여 사용 가능합니다.
+
+## MySQLi API <- 함수에 접근하는 유형(절차지향, 객체지향) 코딩 스타일
+
+(1) 절차지향 방식
+```PHP
+$host = "localhost";
+$user = "root";
+$link = mysqli_connect($host, $user);
+mysqli_select_db($link, "friend");
+$result = mysqli_query($link, "SELECT name FROM friend");
+$number = mysqli_num_rows($result);
+mysqli_close($link);
+?>
+
+(2) 객체주어(중심) 방식
+```PHP
+$host = "localhost";
+$user = "root";
+$link = new mysqli($host, $user);
+$link->select_db("friend"); // link는 데이터베이스 friend를 선택
+$result = $link->query("SELECT name FROM friend"); // link는 다음의 쿼리를 실행
+$number = $result->num_rows; // result는 num의 개수를 계산
+$link->close();
+?>
+
+(3) 혼합형
+```PHP
+$host = "localhost";
+$user = "root";
+$link = new mysqli($host, $user);
+$link->select_db("friend"); // link는 데이터베이스 friend를 선택
+
+$result = mysqli_query($link, "SELECT name FROM friend"); <- 절차지향 방식 혼합
+
+$number = $result->num_rows; // result는 num의 개수를 계산
+$link->close();
+```
+ 
+두 방식은 큰 차이가 없습니다. 사용자는 개인 취향에 따라 선택할 수 있습니다.
+
+## 사용자 계정의 비밀번호 설정
+
+비밀번호 관련 xampp/mysql/data/mysql 안에 user 테이블에 있음
+
+desc user
+
+비밀번호 설정 명령어 : set password = password('');
+
+## user 테이블의 password 필드
+![image](https://user-images.githubusercontent.com/58906858/201844354-790fa85e-62f4-4a54-8a33-ea8473092b2a.png)
+
+localhost = 127.0.0.1 자기주소
+::1 -> IPv6 주소
+
+
+![image](https://user-images.githubusercontent.com/58906858/201845407-287015e9-2725-40c2-8e49-544275aab72f.png)
+
+비밀번호 설정 명령어 : set password = password('설정할 패스워드');
+
+flush privileges : 이 계정과 비밀번호로 접속했을 때 모든 권한을 주겠다.
+
+
+
