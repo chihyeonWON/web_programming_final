@@ -1,6 +1,147 @@
 # web_programming_final
 web_programming_final
+```
+테이블의 구조(필드) 변경
 
+column 옵션은 써도되고 안써도됨
+
+alter table 테이블명 add(추가) drop(삭제) modifiy(데이터타입만) change(이름, 데이터타입)
+적용할 필드명 데이터타입
+
+데이터타입 수정modify
+alter table table_name modify name int(10);
+
+이름수정 change // 과거 필드이름 쓰고 데이터타입도 지정 둘다 바꿀려면 change 써야함
+alter table table_name change old_name name int(10);
+
+테이블의 이름 변경 rename table old_table new_table와 같은 기능
+
+alter table 과거 테이블이름 rename 바꿀 이름
+
+날짜형 데이터는 칸수를 지정하지 않습니다. (YYYY-MM-DD)으로 데이터 입력
+
+숫자형 데이터는 0칸이거나 지정안해도 숫자가 그대로 표시(기본값이 있음)
+
+실수형 decimal(값, 소수 자릿수) 가변
+
+필수 데이터인 경우 not null 지정
+
+다른 레코드와 중복값이 없는 필드 <- primary key로 지정 자동으로 not null 지정
+2개이상 지정 -> primary key가 2개가 아니라 2개가 합쳐져서 하나의 primary key 역할
+
+default 데이터 <- 데이터가 없을 때 기본값 지정
+
+auto_increment : 자동 증가값 옵션
+반드시 primary key를 같이 지정
+
+데이터 입력
+insert into 테이블명(필드 나열) values (데이터 나열)
+
+필드명 없이 모든 데이터 입력
+insert into 테이블명 values(데이터 나열)
+
+일부 필드에만 데이터 입력
+insert into 테이블명 (필드 나열) values (필드 순에 맞게 나열)
+
+load data infile ‘데이터파일.data’ into table 테이블명 
+fields terminated by ‘,’   
+lines terminated by ‘\r\n’;
+select 연산 as ‘더하기’ // 콜롬명 지정
+
+특정 필드 데이터 검색
+select 검색하고자 하는 필드명 from 테이블명
+
+필드 이름 변경해서 검색 AS 생략가능
+select 필드명 AS ‘바꾸고자하는 필드명’, 필드명 AS ‘바꾸고자하는 필드명’ from 테이블명
+
+조건문을 이용한 데이터 검색
+select 필드명 from 테이블명 where 조건문
+
+함수를 이용한 데이터 검색
+AVG(평균), COUNT(개수)
+
+select AVG(필드명) FROM 테이블
+
+와일드 카드 LIKE를 이용한 데이터 검색
+% : 0개 이상
+_ : 1개
+
+서울시로 시작하는 필드 데이터 출력
+select 필드명 from 테이블명 where 필드명 like ‘서울시%’;
+
+그룹 by: 그룹별로 계산
+
+score_tbl 테이블에서 학번(id)별로 취득 과목수(subject), 평균값 출력
+select id ‘학번’, count(point) ‘과목 수, avg(point) ’평균‘ from score_tbl group by id;
+
+score_tbl 테이블에서 과목별(subject)로 점수(point) 취득 학생수 출력
+select subject ‘과목명’, count(subject) ‘학생수’ from score_tbl group by subject;
+
+having : 그룹별로 계산한 결과에서 조건 추가
+
+score_tbl 테이블에서 학번(id)별로 평균이 90 이상인 학번 출력
+select id ‘학번’, avg(pooint) ‘평균’ from score_tbl group by id having avg(point) >= 90;
+
+score_tbl 테이블에서 과목별(subject)로 점수(point) 취득 학생수가 8이상 출력
+select subject ‘과목명’, count(subject) ‘학생수’ from score_tbl group by subject having count(subject) >=8;
+
+order by : 데이터 정렬
+
+필드명이 적은 순으로 정렬 : 오름차순 order by 필드명 asc
+필드명이 높은 순으로 정렬 : 내림차순 order by 필드명 desc
+
+
+2개 이상의 정렬 기준을 적용 나이 같을 때 최근 학번순으로 정렬
+
+select name ‘이름’, age ‘나이’, id ‘학번’ from student_tbl order by age asc, id desc;
+
+limit 출력 개수 지정
+최근 학번 순으로 3개의 레코드 출력 (order by, limit 이용)
+select * from student_tbl order by id desc limit 3;
+
+into outfile ; 출력 결과의 저장
+select 쿼리문의 출력 결과를 파일로 생성할 수 있고 이 파일을 다시 데이터 파일로 사용할 수 있음
+기본으로는 ‘\r\n’, ‘\t’으로 생성되지만 변경할 수 있음
+
+select id, avg(point) from score_tbl group by id 
+into outfile ‘avg_comma.dat’ fileds terminated by ‘,’;
+
+중복 데이터 하나만 출력
+select distinct subject from score_tbl;
+과목 데이터 중복은 하나만 출력
+
+테이블 여려개 검색 table명.필드명
+
+select 테이블명.필드명, 다른테이블명,다른필드명 from 테이블명, 다른테이블명 where 테이블명.필드명 = 테이블명.필드명
+
+데이터 값 수정 update
+
+update 테이블명 set 필드명=‘바꿀데이터’ where 조건문
+
+score_tbl에서 프레임워크 과목의 점수를 5점 감점
+
+update score_tbl set point = point-5 where subject=“프레임워크”;
+
+데이터 삭제
+
+delete from 테이블명 where 조건문;
+
+데이터삭제해도 숫자가 이어지는 문제는 auto_increment =1로 수정
+alter table score_tbl auto increment = 1;
+
+
+
+
+
+
+
+사용자 계정 비밀번호 설정
+
+set password = password(‘1234’);
+flush privileges; // 바로 적용
+
+
+```
 ## 생성할 테이블 구조도
 ![image](https://user-images.githubusercontent.com/58906858/201564260-1420c2fe-49b8-4342-9727-c272a235f87e.png)
 
