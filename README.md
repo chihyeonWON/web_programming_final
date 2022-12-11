@@ -140,7 +140,37 @@ alter table score_tbl auto increment = 1;
 set password = password(‘1234’);
 flush privileges; // 바로 적용
 
+(1) 1개 DB에 2개 테이블 생성
 
+create table 상위테이블 {
+	id char(6) Primary key
+}
+
+create table 하위테이블 {
+	id char(6) not null,
+	foreign key(id) reference 상위테이블(id) on delete cascade on update cascade
+}	
+(2) foreign key 생성
+(3) 2개의 테이블을 이용한 select 검색
+student_tbl에는 id, name이 있고 score_tbl에는 id, subject, point가 있습니다. id라는 공통점이 두 테이블에 존재
+
+문제 : student_tbl, score_tbl의 id이 동일한 레코드를 찾아서 student_tbl에서 name을 score_tbl에서 subject, point를 찾아서 출력
+
+
+1. where 사용 select 찾고자하는테이블명.필드 from 두 테이블명 where 조건 
+select student_tbl.name, score_tbl.subject, score_tbl.point from student_tbl, score_tbl where 
+student_tbl.id = score_tbl; 
+
+
+2. join 사용 select 찾고자하는테이블명.필드 from 테이블명 join 다른테이블명 on 조건
+select student_tbl.name, score_tbl.subject, score_tbl.point from student_tbl join score_tbl on student_tbl = score_tbl;
+
+1. select score_tbl.id, subject_tbl.SUM(subject) from score_tbl, student_tbl where subject_tbl.subject = score_tbl.subject group by id
+
+2. select score_tbl.id, subject_tbl.SUM(subject) from score_tbl join student_tbl on score_tbl.subject = student_tbl.subject group by id
+
+(4) 데이터 추가 폼파일을 학생이 직접 생성
+form.php, insert.php 활용
 ```
 ## 생성할 테이블 구조도
 ![image](https://user-images.githubusercontent.com/58906858/201564260-1420c2fe-49b8-4342-9727-c272a235f87e.png)
